@@ -17,4 +17,29 @@ public class Account implements AccountService {
         this.printer = printer;
     }
 
+    @Override
+    public void deposit(int amount) {
+        if (amount <= 0) {
+            throw new BankingException("Amount must be positive.");
+        }
+        balance += amount;
+        transactions.add(new Transaction(dateProvider.today(), amount, balance));
+    }
+
+    @Override
+    public void withdraw(int amount) {
+        if (amount <= 0) {
+            throw new BankingException("Amount must be positive.");
+        }
+        if (balance < amount) {
+            throw new BankingException("Insufficient balance.");
+        }
+        balance -= amount;
+        transactions.add(new Transaction(dateProvider.today(), -amount, balance));
+    }
+
+    @Override
+    public void printStatement() {
+        printer.print(transactions);
+    }
 }
