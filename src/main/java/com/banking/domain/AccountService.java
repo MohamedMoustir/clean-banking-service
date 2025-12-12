@@ -1,4 +1,7 @@
 package com.banking.domain;
 
-public class AccountService {
+public interface AccountService {
+    void deposit(int amount);
+    void withdraw(int amount);
+    void printStatement();
 }
