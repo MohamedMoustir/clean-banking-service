@@ -1,4 +1,6 @@
 package com.banking.domain;
+import java.time.LocalDate;
 
-public class DateProvider {
+public interface DateProvider {
+    LocalDate today();
 }
