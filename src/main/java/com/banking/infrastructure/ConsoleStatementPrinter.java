@@ -25,5 +25,7 @@ public class ConsoleStatementPrinter implements StatementPrinter {
         }
     }
 
-
+    private String formatLine(Transaction t) {
+        return t.date().format(DATE_FORMAT) + " | " + t.amount() + " | " + t.balance();
+    }
 }
