@@ -17,6 +17,7 @@ public class Main {
     private static final String RESET = "\u001B[0m";
     public static void main(String[] args) {
 
+        logger.info("Application started.");
 
         AccountService myAccount = new Account(
                 new SystemDateProvider(),
@@ -32,32 +33,40 @@ public class Main {
             printMenu();
             String input = scanner.next();
 
+            logger.info("User selected menu option: " + input);
 
             try {
                 switch (input) {
                     case "1" -> {
                         System.out.print("Enter deposit amount: ");
                         int amount = scanner.nextInt();
+                        logger.info("User deposit request: " + amount);
                         myAccount.deposit(amount);
                     }
                     case "2" -> {
                         System.out.print("Enter withdrawal amount: ");
                         int amount = scanner.nextInt();
+                        logger.info("User withdrawal request: " + amount);
                         myAccount.withdraw(amount);
                     }
                     case "3" -> {
+                        logger.info("User requested bank statement");
                         myAccount.printStatement();
                     }
                     case "4" -> {
+                        logger.info("User exited the application.");
                         running = false;
                     }
                     default -> {
+                        logger.warning("User entered invalid option: " + input);
                         System.out.println("Invalid choice.");
                     }
                 }
             } catch (BankingException e) {
+                logger.severe("Banking error: " + e.getMessage());
                 System.out.println("Banking Error: " + e.getMessage());
             } catch (Exception e) {
+                logger.severe("Input error: " + e.getMessage());
                 System.out.println("Input Error: Invalid number.");
                 scanner.nextLine();
             }
