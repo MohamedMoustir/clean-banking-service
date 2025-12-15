@@ -1,6 +1,7 @@
 package com.banking.domain;
 
-import com.banking.domain.Exception.BankingException;
+import com.banking.domain.Exception.InvalidAmountException;
+import com.banking.domain.Exception.InsufficientBalanceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Account implements AccountService {
     @Override
     public void deposit(int amount) {
         if (amount <= 0) {
-            throw new BankingException("Amount must be positive.");
+            throw new InvalidAmountException("Amount must be positive.");
         }
         balance += amount;
         transactions.add(new Transaction(dateProvider.today(), amount, balance));
@@ -29,10 +30,10 @@ public class Account implements AccountService {
     @Override
     public void withdraw(int amount) {
         if (amount <= 0) {
-            throw new BankingException("Amount must be positive.");
+            throw new InvalidAmountException("Amount must be positive.");
         }
         if (balance < amount) {
-            throw new BankingException("Insufficient balance.");
+            throw new InsufficientBalanceException("Insufficient balance.");
         }
         balance -= amount;
         transactions.add(new Transaction(dateProvider.today(), -amount, balance));
